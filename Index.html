@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Innovation Score</title>
+</head>
+<body>
+    <h1>Calcola l'Innovation Score</h1>
+    <textarea id="description" placeholder="Inserisci la descrizione del progetto"></textarea><br>
+    <button onclick="calculateScore()">Calcola</button>
+    <p id="result"></p>
+    
+    <script>
+        function calculateScore() {
+            const description = document.getElementById('description').value;
+            fetch('https://boulaiscore2.herokuapp.com/predict', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ description })
+            })
+            .then(response => response.json())
+            .then(data => document.getElementById('result').innerText = 'Innovation Score: ' + data.innovation_score)
+            .catch(error => console.error('Errore:', error));
+        }
+    </script>
+</body>
+</html>
